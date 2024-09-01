@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Create Floor Table -->
+    <changeSet id="001-create-floor-table" author="dipak">
+        <createTable tableName="floor">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Create Restaurant Table -->
+    <changeSet id="002-create-restaurant-table" author="dipak">
+        <createTable tableName="restaurant_table">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="capacity" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="floor_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="restaurant_table"
+                                 baseColumnNames="floor_id"
+                                 constraintName="fk_floor_table"
+                                 referencedTableName="floor"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
