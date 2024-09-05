@@ -1,11 +1,17 @@
 package com.demo.table_management.model;
 
-import lombok.Data;
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.List;
 
-@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "floor")
 public class Floor {
 
@@ -17,5 +23,6 @@ public class Floor {
     private String name;
 
     @OneToMany(mappedBy = "floor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<RestaurantTable> tables;
 }

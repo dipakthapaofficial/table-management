@@ -1,10 +1,19 @@
 package com.demo.table_management.model;
 
-import lombok.Data;
-import javax.persistence.*;
+import com.demo.table_management.enums.ReservationType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
+import java.util.List;
+
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 @Table(name = "restaurant_table")
 public class RestaurantTable {
 
@@ -18,11 +27,12 @@ public class RestaurantTable {
     @Column(nullable = false)
     private int capacity;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private ReservationType status;
-
     @ManyToOne
     @JoinColumn(name = "floor_id", nullable = false)
+    @JsonBackReference
     private Floor floor;
+
+    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Reservation> reservations;
 }
